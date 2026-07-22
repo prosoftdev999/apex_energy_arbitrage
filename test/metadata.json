@@ -1,0 +1,712 @@
+{
+  "eval": [
+    {
+      "nonce": 0,
+      "profit": 33576.8920506913,
+      "quality": 6806931,
+      "scenario": "BASELINE",
+      "baseline_profit": 4300.907827222258
+    },
+    {
+      "nonce": 1,
+      "profit": 47711.378887353654,
+      "quality": 9545279,
+      "scenario": "CONGESTED",
+      "baseline_profit": 4524.430234352708
+    },
+    {
+      "nonce": 2,
+      "profit": 227520.33361576678,
+      "quality": 9859423,
+      "scenario": "MULTIDAY",
+      "baseline_profit": 20951.42010783001
+    },
+    {
+      "nonce": 3,
+      "profit": 323735.5084207646,
+      "quality": 10000000,
+      "scenario": "DENSE",
+      "baseline_profit": 27877.198313233883
+    },
+    {
+      "nonce": 4,
+      "profit": 476243.1244574844,
+      "quality": 10000000,
+      "scenario": "CAPSTONE",
+      "baseline_profit": 23381.16928944136
+    },
+    {
+      "nonce": 5,
+      "profit": 52609.88830540679,
+      "quality": 282809,
+      "scenario": "BASELINE",
+      "baseline_profit": 41011.48740507276
+    },
+    {
+      "nonce": 6,
+      "profit": 81096.27783494612,
+      "quality": 1060621,
+      "scenario": "CONGESTED",
+      "baseline_profit": 39355.25292482966
+    },
+    {
+      "nonce": 7,
+      "profit": 272035.8289027031,
+      "quality": 10000000,
+      "scenario": "MULTIDAY",
+      "baseline_profit": 8117.987709395264
+    },
+    {
+      "nonce": 8,
+      "profit": 252128.75337497788,
+      "quality": 10000000,
+      "scenario": "DENSE",
+      "baseline_profit": 12608.508840453418
+    },
+    {
+      "nonce": 9,
+      "profit": 525272.1275811,
+      "quality": 10000000,
+      "scenario": "CAPSTONE",
+      "baseline_profit": 5611.263233248265
+    },
+    {
+      "nonce": 10,
+      "profit": 43942.86973056946,
+      "quality": 1764183,
+      "scenario": "BASELINE",
+      "baseline_profit": 15897.233888018942
+    },
+    {
+      "nonce": 11,
+      "profit": 70490.57230598049,
+      "quality": 10000000,
+      "scenario": "CONGESTED",
+      "baseline_profit": 593.8531446025438
+    },
+    {
+      "nonce": 12,
+      "profit": 104315.31698536778,
+      "quality": 6956683,
+      "scenario": "MULTIDAY",
+      "baseline_profit": 13110.402985576211
+    },
+    {
+      "nonce": 13,
+      "profit": 460002.45492696087,
+      "quality": 8973674,
+      "scenario": "DENSE",
+      "baseline_profit": 46121.665570139055
+    },
+    {
+      "nonce": 14,
+      "profit": 618002.0228336114,
+      "quality": 10000000,
+      "scenario": "CAPSTONE",
+      "baseline_profit": 37105.04968338866
+    },
+    {
+      "nonce": 15,
+      "profit": 43079.56405082501,
+      "quality": 982670,
+      "scenario": "BASELINE",
+      "baseline_profit": 21728.061099988856
+    },
+    {
+      "nonce": 16,
+      "profit": 75494.53663861958,
+      "quality": 10000000,
+      "scenario": "CONGESTED",
+      "baseline_profit": 6181.348581762671
+    },
+    {
+      "nonce": 17,
+      "profit": 222439.6447950576,
+      "quality": 10000000,
+      "scenario": "MULTIDAY",
+      "baseline_profit": 6278.724752930884
+    },
+    {
+      "nonce": 18,
+      "profit": 434919.3139984324,
+      "quality": 10000000,
+      "scenario": "DENSE",
+      "baseline_profit": 18855.675949369514
+    },
+    {
+      "nonce": 19,
+      "profit": 485549.78618999437,
+      "quality": 10000000,
+      "scenario": "CAPSTONE",
+      "baseline_profit": 13908.500423188878
+    },
+    {
+      "nonce": 20,
+      "profit": 43973.00139427959,
+      "quality": 936467,
+      "scenario": "BASELINE",
+      "baseline_profit": 22707.849873800773
+    },
+    {
+      "nonce": 21,
+      "profit": 42803.04554107412,
+      "quality": 2771926,
+      "scenario": "CONGESTED",
+      "baseline_profit": 11347.794846734412
+    },
+    {
+      "nonce": 22,
+      "profit": 198041.99368608228,
+      "quality": 8593611,
+      "scenario": "MULTIDAY",
+      "baseline_profit": 20643.113246925815
+    },
+    {
+      "nonce": 23,
+      "profit": 383592.0999808008,
+      "quality": 10000000,
+      "scenario": "DENSE",
+      "baseline_profit": 17599.920416777826
+    },
+    {
+      "nonce": 24,
+      "profit": 425901.8967060464,
+      "quality": 10000000,
+      "scenario": "CAPSTONE",
+      "baseline_profit": 31644.5276452323
+    },
+    {
+      "nonce": 25,
+      "profit": 38572.5697923591,
+      "quality": 695802,
+      "scenario": "BASELINE",
+      "baseline_profit": 22745.909644224863
+    },
+    {
+      "nonce": 26,
+      "profit": 92617.17678471585,
+      "quality": 1624114,
+      "scenario": "CONGESTED",
+      "baseline_profit": 35294.64654057838
+    },
+    {
+      "nonce": 27,
+      "profit": 203500.75154696897,
+      "quality": 10000000,
+      "scenario": "MULTIDAY",
+      "baseline_profit": 8858.624340767838
+    },
+    {
+      "nonce": 28,
+      "profit": 275893.26395047706,
+      "quality": 10000000,
+      "scenario": "DENSE",
+      "baseline_profit": 5258.210911686786
+    },
+    {
+      "nonce": 29,
+      "profit": 335989.3779541767,
+      "quality": 10000000,
+      "scenario": "CAPSTONE",
+      "baseline_profit": 4583.784432703673
+    },
+    {
+      "nonce": 30,
+      "profit": 54423.27761929142,
+      "quality": 502806,
+      "scenario": "BASELINE",
+      "baseline_profit": 36214.44455222623
+    },
+    {
+      "nonce": 31,
+      "profit": 100528.82477578001,
+      "quality": 673989,
+      "scenario": "CONGESTED",
+      "baseline_profit": 60053.468810274186
+    },
+    {
+      "nonce": 32,
+      "profit": 273891.7478649793,
+      "quality": 10000000,
+      "scenario": "MULTIDAY",
+      "baseline_profit": 10815.214839596238
+    },
+    {
+      "nonce": 33,
+      "profit": 358549.0959773899,
+      "quality": 8606991,
+      "scenario": "DENSE",
+      "baseline_profit": 37321.686542254174
+    },
+    {
+      "nonce": 34,
+      "profit": 422928.85183122096,
+      "quality": 10000000,
+      "scenario": "CAPSTONE",
+      "baseline_profit": 24881.05512884072
+    },
+    {
+      "nonce": 35,
+      "profit": 44301.60223182873,
+      "quality": 732649,
+      "scenario": "BASELINE",
+      "baseline_profit": 25568.713911389223
+    },
+    {
+      "nonce": 36,
+      "profit": 67288.39096115922,
+      "quality": 10000000,
+      "scenario": "CONGESTED",
+      "baseline_profit": 3920.639464754924
+    },
+    {
+      "nonce": 37,
+      "profit": 216858.7299231896,
+      "quality": 5032687,
+      "scenario": "MULTIDAY",
+      "baseline_profit": 35947.28771346311
+    },
+    {
+      "nonce": 38,
+      "profit": 355525.05757462065,
+      "quality": 10000000,
+      "scenario": "DENSE",
+      "baseline_profit": 7096.041608443579
+    },
+    {
+      "nonce": 39,
+      "profit": 577926.0261132197,
+      "quality": 10000000,
+      "scenario": "CAPSTONE",
+      "baseline_profit": 21090.029270469997
+    },
+    {
+      "nonce": 40,
+      "profit": 43246.38342818989,
+      "quality": 1032279,
+      "scenario": "BASELINE",
+      "baseline_profit": 21279.74714261362
+    },
+    {
+      "nonce": 41,
+      "profit": 75580.44600180718,
+      "quality": 10000000,
+      "scenario": "CONGESTED",
+      "baseline_profit": 3446.3992283947928
+    },
+    {
+      "nonce": 42,
+      "profit": 311167.6128974452,
+      "quality": 6210682,
+      "scenario": "MULTIDAY",
+      "baseline_profit": 43153.70288403229
+    },
+    {
+      "nonce": 43,
+      "profit": 279212.46861787804,
+      "quality": 5477333,
+      "scenario": "DENSE",
+      "baseline_profit": 43106.08277381358
+    },
+    {
+      "nonce": 44,
+      "profit": 455476.3449283712,
+      "quality": 8231317,
+      "scenario": "CAPSTONE",
+      "baseline_profit": 49340.34337656702
+    },
+    {
+      "nonce": 45,
+      "profit": 41027.49035024664,
+      "quality": 3277101,
+      "scenario": "BASELINE",
+      "baseline_profit": 9592.360278404216
+    },
+    {
+      "nonce": 46,
+      "profit": 89213.30320232824,
+      "quality": 4012038,
+      "scenario": "CONGESTED",
+      "baseline_profit": 17799.80651853042
+    },
+    {
+      "nonce": 47,
+      "profit": 215236.66620927196,
+      "quality": 8165848,
+      "scenario": "MULTIDAY",
+      "baseline_profit": 23482.459882467883
+    },
+    {
+      "nonce": 48,
+      "profit": 302602.20350271254,
+      "quality": 4685531,
+      "scenario": "DENSE",
+      "baseline_profit": 53223.2113013187
+    },
+    {
+      "nonce": 49,
+      "profit": 550092.7150853055,
+      "quality": 10000000,
+      "scenario": "CAPSTONE",
+      "baseline_profit": 14519.142607975851
+    },
+    {
+      "nonce": 50,
+      "profit": 50227.68868758403,
+      "quality": 1045971,
+      "scenario": "BASELINE",
+      "baseline_profit": 24549.556762795906
+    },
+    {
+      "nonce": 51,
+      "profit": 71049.1318210008,
+      "quality": 1046377,
+      "scenario": "CONGESTED",
+      "baseline_profit": 34719.47496521129
+    },
+    {
+      "nonce": 52,
+      "profit": 131228.0214750118,
+      "quality": 5832092,
+      "scenario": "MULTIDAY",
+      "baseline_profit": 19207.59035548823
+    },
+    {
+      "nonce": 53,
+      "profit": 285535.0734061408,
+      "quality": 10000000,
+      "scenario": "DENSE",
+      "baseline_profit": 6887.35077135021
+    },
+    {
+      "nonce": 54,
+      "profit": 398980.4016340492,
+      "quality": 10000000,
+      "scenario": "CAPSTONE",
+      "baseline_profit": 21865.7687071392
+    },
+    {
+      "nonce": 55,
+      "profit": 46192.108876626895,
+      "quality": 9691170,
+      "scenario": "BASELINE",
+      "baseline_profit": 4320.585038093374
+    },
+    {
+      "nonce": 56,
+      "profit": 78606.38092227807,
+      "quality": 2745283,
+      "scenario": "CONGESTED",
+      "baseline_profit": 20988.10345479128
+    },
+    {
+      "nonce": 57,
+      "profit": 181403.38790903156,
+      "quality": 9794414,
+      "scenario": "MULTIDAY",
+      "baseline_profit": 16805.302599085182
+    },
+    {
+      "nonce": 58,
+      "profit": 364189.5622836235,
+      "quality": 10000000,
+      "scenario": "DENSE",
+      "baseline_profit": 12449.02682304175
+    },
+    {
+      "nonce": 59,
+      "profit": 579621.4528421889,
+      "quality": 10000000,
+      "scenario": "CAPSTONE",
+      "baseline_profit": 21774.5034478989
+    },
+    {
+      "nonce": 60,
+      "profit": 48776.938366182294,
+      "quality": 424229,
+      "scenario": "BASELINE",
+      "baseline_profit": 34247.95433393774
+    },
+    {
+      "nonce": 61,
+      "profit": 91259.63273609876,
+      "quality": 10000000,
+      "scenario": "CONGESTED",
+      "baseline_profit": 0.00011067746153828328
+    },
+    {
+      "nonce": 62,
+      "profit": 173289.18795113428,
+      "quality": 3753928,
+      "scenario": "MULTIDAY",
+      "baseline_profit": 36451.79127747532
+    },
+    {
+      "nonce": 63,
+      "profit": 392133.0866864035,
+      "quality": 7055211,
+      "scenario": "DENSE",
+      "baseline_profit": 48680.6720760464
+    },
+    {
+      "nonce": 64,
+      "profit": 551965.8298222645,
+      "quality": 10000000,
+      "scenario": "CAPSTONE",
+      "baseline_profit": 9416.934353976218
+    },
+    {
+      "nonce": 65,
+      "profit": 41076.43713586419,
+      "quality": 706684,
+      "scenario": "BASELINE",
+      "baseline_profit": 24067.975163373765
+    },
+    {
+      "nonce": 66,
+      "profit": 88824.72058086813,
+      "quality": 2093740,
+      "scenario": "CONGESTED",
+      "baseline_profit": 28711.110951366758
+    },
+    {
+      "nonce": 67,
+      "profit": 153186.67233184827,
+      "quality": 7045716,
+      "scenario": "MULTIDAY",
+      "baseline_profit": 19039.533747222245
+    },
+    {
+      "nonce": 68,
+      "profit": 430669.21608911495,
+      "quality": 10000000,
+      "scenario": "DENSE",
+      "baseline_profit": 28182.92450348665
+    },
+    {
+      "nonce": 69,
+      "profit": 701499.80618202,
+      "quality": 10000000,
+      "scenario": "CAPSTONE",
+      "baseline_profit": 40891.67353013877
+    },
+    {
+      "nonce": 70,
+      "profit": 48149.819309079896,
+      "quality": 516366,
+      "scenario": "BASELINE",
+      "baseline_profit": 31753.42330222134
+    },
+    {
+      "nonce": 71,
+      "profit": 90252.4099428522,
+      "quality": 1733856,
+      "scenario": "CONGESTED",
+      "baseline_profit": 33012.861262837825
+    },
+    {
+      "nonce": 72,
+      "profit": 271976.242520778,
+      "quality": 10000000,
+      "scenario": "MULTIDAY",
+      "baseline_profit": 4963.390234816129
+    },
+    {
+      "nonce": 73,
+      "profit": 345842.2506907263,
+      "quality": 10000000,
+      "scenario": "DENSE",
+      "baseline_profit": 16568.495142377906
+    },
+    {
+      "nonce": 74,
+      "profit": 568139.1087051133,
+      "quality": 10000000,
+      "scenario": "CAPSTONE",
+      "baseline_profit": 47764.07140932581
+    },
+    {
+      "nonce": 75,
+      "profit": 57085.29140433917,
+      "quality": 649183,
+      "scenario": "BASELINE",
+      "baseline_profit": 34614.294751438596
+    },
+    {
+      "nonce": 76,
+      "profit": 98050.93788242985,
+      "quality": 9682286,
+      "scenario": "CONGESTED",
+      "baseline_profit": 9178.834510862003
+    },
+    {
+      "nonce": 77,
+      "profit": 254710.31327522037,
+      "quality": 10000000,
+      "scenario": "MULTIDAY",
+      "baseline_profit": 12893.95205146762
+    },
+    {
+      "nonce": 78,
+      "profit": 483418.92039360286,
+      "quality": 10000000,
+      "scenario": "DENSE",
+      "baseline_profit": 7541.516372727858
+    },
+    {
+      "nonce": 79,
+      "profit": 413648.6403600904,
+      "quality": 10000000,
+      "scenario": "CAPSTONE",
+      "baseline_profit": 36334.79149539387
+    },
+    {
+      "nonce": 80,
+      "profit": 46330.14568607462,
+      "quality": 4139772,
+      "scenario": "BASELINE",
+      "baseline_profit": 9014.046885692538
+    },
+    {
+      "nonce": 81,
+      "profit": 70187.37759760862,
+      "quality": 4070526,
+      "scenario": "CONGESTED",
+      "baseline_profit": 13842.228938174123
+    },
+    {
+      "nonce": 82,
+      "profit": 165187.1639245489,
+      "quality": 4861501,
+      "scenario": "MULTIDAY",
+      "baseline_profit": 28181.7157759687
+    },
+    {
+      "nonce": 83,
+      "profit": 293677.344877296,
+      "quality": 6916276,
+      "scenario": "DENSE",
+      "baseline_profit": 37097.9176082157
+    },
+    {
+      "nonce": 84,
+      "profit": 532338.0827778595,
+      "quality": 10000000,
+      "scenario": "CAPSTONE",
+      "baseline_profit": 41180.38097937817
+    },
+    {
+      "nonce": 85,
+      "profit": 34710.06987866806,
+      "quality": 992211,
+      "scenario": "BASELINE",
+      "baseline_profit": 17422.885808971485
+    },
+    {
+      "nonce": 86,
+      "profit": 97681.86746608875,
+      "quality": 1933318,
+      "scenario": "CONGESTED",
+      "baseline_profit": 33300.807348039
+    },
+    {
+      "nonce": 87,
+      "profit": 220770.94679764964,
+      "quality": 10000000,
+      "scenario": "MULTIDAY",
+      "baseline_profit": 5202.942071300511
+    },
+    {
+      "nonce": 88,
+      "profit": 293235.7686214366,
+      "quality": 6957646,
+      "scenario": "DENSE",
+      "baseline_profit": 36849.56297559693
+    },
+    {
+      "nonce": 89,
+      "profit": 542511.8411661793,
+      "quality": 10000000,
+      "scenario": "CAPSTONE",
+      "baseline_profit": 16583.329073657387
+    },
+    {
+      "nonce": 90,
+      "profit": 47506.91170071222,
+      "quality": 445929,
+      "scenario": "BASELINE",
+      "baseline_profit": 32855.64081405841
+    },
+    {
+      "nonce": 91,
+      "profit": 104417.76486219553,
+      "quality": 5082031,
+      "scenario": "CONGESTED",
+      "baseline_profit": 17168.240083692926
+    },
+    {
+      "nonce": 92,
+      "profit": 180173.2116066694,
+      "quality": 10000000,
+      "scenario": "MULTIDAY",
+      "baseline_profit": 4333.467614517822
+    },
+    {
+      "nonce": 93,
+      "profit": 402094.3034638182,
+      "quality": 6590555,
+      "scenario": "DENSE",
+      "baseline_profit": 52972.977918105054
+    },
+    {
+      "nonce": 94,
+      "profit": 388020.1113879884,
+      "quality": 9739272,
+      "scenario": "CAPSTONE",
+      "baseline_profit": 36130.95254019974
+    },
+    {
+      "nonce": 95,
+      "profit": 56541.227492901715,
+      "quality": 1072702,
+      "scenario": "BASELINE",
+      "baseline_profit": 27278.995464675485
+    },
+    {
+      "nonce": 96,
+      "profit": 82295.75684160987,
+      "quality": 4776077,
+      "scenario": "CONGESTED",
+      "baseline_profit": 14247.68922217743
+    },
+    {
+      "nonce": 97,
+      "profit": 172309.80160509888,
+      "quality": 8619226,
+      "scenario": "MULTIDAY",
+      "baseline_profit": 17913.06379812945
+    },
+    {
+      "nonce": 98,
+      "profit": 285255.8229746194,
+      "quality": 5568459,
+      "scenario": "DENSE",
+      "baseline_profit": 43428.116288055986
+    },
+    {
+      "nonce": 99,
+      "profit": 501535.1178373918,
+      "quality": 10000000,
+      "scenario": "CAPSTONE",
+      "baseline_profit": 25704.982796011427
+    }
+  ],
+  "sandbox_id": "533b2237-9280-44ea-ae80-26bc1129e4b4",
+  "avg_quality": 6730774,
+  "master_seed": 590682929,
+  "log_file_name": "533b2237-9280-44ea-ae80-26bc1129e4b4.log",
+  "num_instances": 100,
+  "source": "Transcribed from user screenshots; use as reference/target metadata, not official hidden test data.",
+  "official_raw_score": 6730774.0,
+  "official_final_score": 0.6730774
+}
