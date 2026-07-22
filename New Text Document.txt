@@ -1,0 +1,27 @@
+0.6843873
+0.7016378
+0.7121029
+0.7137267
+0.7135234
+0.7160099
+0.7159105
+0.7179284
+0.7191919
+0.7198228
+0.7204045
+0.7336143
+
+
+
+
+
+Oracle ceiling(hard max), this is the my goal.(0.7957)
+
+cd "D:\bittensor\dev\apex\ID7\sandbox"
+python test_policy_real.py policy_new --instances 100 --seed 42
+
+cd "D:\bittensor\dev\apex\ID7\sandbox"
+python test_policy_real.py policy_new --instances 20 --seed 42 --workers 4
+
+cd D:\bittensor\dev\apex\ID7\sandbox
+python test_policy_real.py policy --instances 100 --seed 42 --workers 4

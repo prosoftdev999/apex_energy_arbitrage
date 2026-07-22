@@ -1,0 +1,48 @@
+[
+  {
+    "experiment_id": "ARCH-01",
+    "architecture": "Dual-price-aware battery-specific continuation value (opportunity-cost/shadow-price, arch #14/16/17)",
+    "implementation": "candidate_dualprice.py",
+    "mechanism": "Extract LP dual values on binding PTDF flow constraints; accumulate causally via EMA per line; discount/boost each battery's continuation value proportional to its own PTDF exposure to historically-expensive lines",
+    "configs_tested": [
+      {"beta": 0.1, "sign": "discount", "baseline_mean_diff": -0.196, "congested_mean_diff": -0.074},
+      {"beta": 0.01, "sign": "discount", "baseline_mean_diff": -0.0023, "congested_mean_diff": -0.0043},
+      {"beta": 0.003, "sign": "discount", "baseline_mean_diff": -0.0005, "congested_mean_diff": 0.0008},
+      {"beta": 0.01, "sign": "bonus", "baseline_mean_diff": 0.0008, "congested_mean_diff": 0.0008},
+      {"beta": 0.05, "sign": "bonus", "baseline_mean_diff": -0.0282, "congested_mean_diff": -0.0141},
+      {"beta": 0.1, "sign": "bonus", "baseline_mean_diff": -0.1494, "congested_mean_diff": -0.0520}
+    ],
+    "best_overall_gain": 0.0008,
+    "threshold": 0.003,
+    "decision": "REJECTED",
+    "failure_reason": "Best observed gain (+0.0008 at near-zero beta) is below the +0.003 promotion threshold; any larger magnitude in either direction actively regresses both scenarios",
+    "remaining_opportunity": "None identified for this specific mechanism; the aggregate uniform congestion discount already active in best_candidate.py appears to already capture the exploitable portion of this signal",
+    "seeds_used": [42],
+    "instance_count": 8,
+    "runtime_s": null
+  },
+  {
+    "experiment_id": "ARCH-02",
+    "architecture": "Designated-reliever joint SOC-diversity (sparse cluster-role preservation, arch #14/16/17 variant)",
+    "implementation": "candidate_diversity.py",
+    "mechanism": "Identify the single most-utilized line from public exogenous injections; give a bonus to only the one battery best-positioned (PTDF-sign-matched, most useful headroom) to relieve it -- sparse vs. architecture 1's dense per-battery adjustment",
+    "configs_tested": [
+      {"beta": 0.02, "baseline_mean_diff": -0.0014, "congested_mean_diff": -0.0010},
+      {"beta": 0.1, "baseline_mean_diff": -0.0210, "congested_mean_diff": -0.0035},
+      {"beta": 0.3, "baseline_mean_diff": -0.1202, "congested_mean_diff": -0.0387}
+    ],
+    "best_overall_gain": -0.0012,
+    "threshold": 0.003,
+    "decision": "REJECTED",
+    "failure_reason": "Negative at every tested scale, monotonically worse with larger beta; no positive regime found",
+    "remaining_opportunity": "None identified; consistent with ARCH-01's finding that battery-specific network-topology-aware value corrections do not add exploitable information beyond the existing aggregate discount",
+    "seeds_used": [42],
+    "instance_count": 8,
+    "runtime_s": null
+  },
+  {
+    "experiment_id": "ARCH-SCORED-ONLY",
+    "note": "Architectures 1-11, 15, 18-20 were not implemented -- scored and eliminated by direct application of two facts proven experimentally this session: (a) OA-O0=0 (the LP allocator is already exactly optimal given the current continuation value, so no re-solve/search/planning method operating on the SAME objective can improve on it), and (b) RT price shocks are proven i.i.d. with a fresh reseed every step (source-traced), so no forecasting/lookahead method can exceed the exact expectation already computed without illegal future information. See architecture_report.md for the full per-architecture table and reasoning.",
+    "decision": "ELIMINATED_BY_PROOF, not tested empirically"
+  }
+]

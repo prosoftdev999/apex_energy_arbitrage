@@ -1,0 +1,105 @@
+[policy_v2] running 100 instances (seed=987654, workers=4)...
+  [policy_v2]   0 BASELINE   quality= +0.916 runtime=    0.1s step_max=   7.9ms
+  [policy_v2]   1 CONGESTED  quality= +2.653 runtime=    0.3s step_max=  10.0ms
+  [policy_v2]   5 BASELINE   quality= +4.381 runtime=    0.2s step_max=  12.9ms
+  [policy_v2]   6 CONGESTED  quality= +6.056 runtime=    0.4s step_max=  10.5ms
+  [policy_v2]   2 MULTIDAY   quality=+24.476 runtime=    2.2s step_max=  42.0ms
+  [policy_v2]   7 MULTIDAY   quality= +7.178 runtime=    2.1s step_max=  21.0ms
+  [policy_v2]   3 DENSE      quality= +4.790 runtime=    3.5s step_max=  56.0ms
+  [policy_v2]  10 BASELINE   quality= +0.321 runtime=    0.1s step_max=   6.2ms
+  [policy_v2]  11 CONGESTED  quality= +1.050 runtime=    0.2s step_max=  12.2ms
+  [policy_v2]   8 DENSE      quality=+51.123 runtime=    3.5s step_max=  43.3ms
+  [policy_v2]  12 MULTIDAY   quality=+10.395 runtime=    2.0s step_max=  43.1ms
+  [policy_v2]   4 CAPSTONE   quality=+17.760 runtime=    6.7s step_max=  94.8ms
+  [policy_v2]  15 BASELINE   quality= +0.308 runtime=    0.2s step_max=  20.3ms
+  [policy_v2]  16 CONGESTED  quality= +1.743 runtime=    0.5s step_max=  11.6ms
+  [policy_v2]  13 DENSE      quality=+15.657 runtime=    5.9s step_max=  80.5ms
+  [policy_v2]   9 CAPSTONE   quality=+14.312 runtime=    7.8s step_max= 106.4ms
+  [policy_v2]  17 MULTIDAY   quality= +7.418 runtime=    3.4s step_max=  77.0ms
+  [policy_v2]  20 BASELINE   quality= +0.376 runtime=    0.2s step_max=  15.6ms
+  [policy_v2]  21 CONGESTED  quality=+23.476 runtime=    0.5s step_max=  13.9ms
+  [policy_v2]  22 MULTIDAY   quality=+10.462 runtime=    3.4s step_max=  71.5ms
+  [policy_v2]  18 DENSE      quality= +8.771 runtime=    6.3s step_max= 181.2ms
+  [policy_v2]  14 CAPSTONE   quality=+33.506 runtime=   11.5s step_max= 159.4ms
+  [policy_v2]  25 BASELINE   quality= +0.273 runtime=    0.2s step_max=   7.5ms
+  [policy_v2]  26 CONGESTED  quality= +1.471 runtime=    0.5s step_max=  10.7ms
+  [policy_v2]  23 DENSE      quality=+10.072 runtime=    6.4s step_max= 158.7ms
+  [policy_v2]  27 MULTIDAY   quality= +8.528 runtime=    3.8s step_max=  91.8ms
+  [policy_v2]  19 CAPSTONE   quality=+54.100 runtime=   11.8s step_max= 113.2ms
+  [policy_v2]  30 BASELINE   quality= +8.116 runtime=    0.2s step_max=  25.2ms
+  [policy_v2]  31 CONGESTED  quality= +3.342 runtime=    0.5s step_max=  38.4ms
+  [policy_v2]  28 DENSE      quality=+14.138 runtime=    5.6s step_max=  78.7ms
+  [policy_v2]  32 MULTIDAY   quality= +8.608 runtime=    2.9s step_max=  46.0ms
+  [policy_v2]  24 CAPSTONE   quality=+32.364 runtime=   10.9s step_max= 111.1ms
+  [policy_v2]  35 BASELINE   quality= +2.354 runtime=    0.2s step_max=   6.5ms
+  [policy_v2]  36 CONGESTED  quality=+120.404 runtime=    0.7s step_max=  37.4ms
+  [policy_v2]  33 DENSE      quality=+16.392 runtime=    5.7s step_max=  89.7ms
+  [policy_v2]  37 MULTIDAY   quality= +6.906 runtime=    3.1s step_max=  66.9ms
+  [policy_v2]  29 CAPSTONE   quality=+53.315 runtime=   11.0s step_max= 259.6ms
+  [policy_v2]  40 BASELINE   quality= +0.411 runtime=    0.2s step_max=   8.4ms
+  [policy_v2]  41 CONGESTED  quality= +1.196 runtime=    0.4s step_max=  13.0ms
+  [policy_v2]  38 DENSE      quality= +9.638 runtime=    5.9s step_max=  90.5ms
+  [policy_v2]  42 MULTIDAY   quality= +7.447 runtime=    3.6s step_max=  77.1ms
+  [policy_v2]  34 CAPSTONE   quality=+23.496 runtime=   12.2s step_max= 151.3ms
+  [policy_v2]  45 BASELINE   quality= +1.447 runtime=    0.3s step_max=  26.8ms
+  [policy_v2]  46 CONGESTED  quality=+23.407 runtime=    0.8s step_max=  92.0ms
+  [policy_v2]  43 DENSE      quality=+18.652 runtime=    5.3s step_max=  84.2ms
+  [policy_v2]  47 MULTIDAY   quality= +7.226 runtime=    3.0s step_max=  74.1ms
+  [policy_v2]  39 CAPSTONE   quality=+13.970 runtime=   10.9s step_max= 136.4ms
+  [policy_v2]  50 BASELINE   quality= +0.267 runtime=    0.2s step_max=  39.2ms
+  [policy_v2]  51 CONGESTED  quality= +2.264 runtime=    0.7s step_max=  34.0ms
+  [policy_v2]  48 DENSE      quality=+13.385 runtime=    5.0s step_max=  85.3ms
+  [policy_v2]  52 MULTIDAY   quality=+19.431 runtime=    3.6s step_max=  49.2ms
+  [policy_v2]  44 CAPSTONE   quality=+14.504 runtime=   11.4s step_max= 218.5ms
+  [policy_v2]  55 BASELINE   quality= +0.819 runtime=    0.2s step_max=   7.7ms
+  [policy_v2]  56 CONGESTED  quality= +5.614 runtime=    0.5s step_max=  14.1ms
+  [policy_v2]  53 DENSE      quality=+16.914 runtime=    7.2s step_max= 133.2ms
+  [policy_v2]  57 MULTIDAY   quality=+13.544 runtime=    3.5s step_max=  60.7ms
+  [policy_v2]  49 CAPSTONE   quality= +9.456 runtime=   10.3s step_max= 122.3ms
+  [policy_v2]  60 BASELINE   quality= +2.995 runtime=    0.3s step_max=  32.7ms
+  [policy_v2]  61 CONGESTED  quality= +6.749 runtime=    1.2s step_max=  90.8ms
+  [policy_v2]  58 DENSE      quality=+13.280 runtime=    6.5s step_max= 309.0ms
+  [policy_v2]  62 MULTIDAY   quality=+96.804 runtime=    3.4s step_max=  74.9ms
+  [policy_v2]  54 CAPSTONE   quality=+17.990 runtime=   12.6s step_max= 211.3ms
+  [policy_v2]  65 BASELINE   quality= +0.377 runtime=    0.2s step_max=  23.7ms
+  [policy_v2]  66 CONGESTED  quality= +2.189 runtime=    0.8s step_max=  26.5ms
+  [policy_v2]  63 DENSE      quality=+401.895 runtime=    6.7s step_max= 191.8ms
+  [policy_v2]  67 MULTIDAY   quality=+11.894 runtime=    3.2s step_max=  50.7ms
+  [policy_v2]  59 CAPSTONE   quality=+23.920 runtime=   12.7s step_max= 154.4ms
+  [policy_v2]  70 BASELINE   quality= +3.569 runtime=    0.2s step_max=   7.0ms
+  [policy_v2]  71 CONGESTED  quality= +9.693 runtime=    0.8s step_max=  42.9ms
+  [policy_v2]  68 DENSE      quality=+18.033 runtime=    5.1s step_max=  91.1ms
+  [policy_v2]  72 MULTIDAY   quality= +8.478 runtime=    2.9s step_max=  85.5ms
+  [policy_v2]  64 CAPSTONE   quality=+23.100 runtime=   11.9s step_max= 180.5ms
+  [policy_v2]  75 BASELINE   quality= +0.428 runtime=    0.2s step_max=   6.4ms
+  [policy_v2]  76 CONGESTED  quality= +2.871 runtime=    0.4s step_max=  14.3ms
+  [policy_v2]  73 DENSE      quality=+13.492 runtime=    5.2s step_max=  93.5ms
+  [policy_v2]  77 MULTIDAY   quality=+146.731 runtime=    3.4s step_max=  80.9ms
+  [policy_v2]  69 CAPSTONE   quality=+50.754 runtime=   11.2s step_max= 125.0ms
+  [policy_v2]  80 BASELINE   quality= +0.950 runtime=    0.2s step_max=   9.3ms
+  [policy_v2]  81 CONGESTED  quality= +1.709 runtime=    0.4s step_max=  15.4ms
+  [policy_v2]  78 DENSE      quality=+40.649 runtime=    7.4s step_max= 100.9ms
+  [policy_v2]  82 MULTIDAY   quality=+30.431 runtime=    3.2s step_max=  95.2ms
+  [policy_v2]  74 CAPSTONE   quality=+17.487 runtime=   11.7s step_max= 133.5ms
+  [policy_v2]  85 BASELINE   quality= +2.245 runtime=    0.2s step_max=  13.6ms
+  [policy_v2]  86 CONGESTED  quality= +1.072 runtime=    0.4s step_max=  30.2ms
+  [policy_v2]  83 DENSE      quality= +4.453 runtime=    5.8s step_max=  83.2ms
+  [policy_v2]  87 MULTIDAY   quality= +8.957 runtime=    4.4s step_max=  88.0ms
+  [policy_v2]  79 CAPSTONE   quality=+13.866 runtime=   11.2s step_max= 308.7ms
+  [policy_v2]  90 BASELINE   quality= +1.866 runtime=    0.2s step_max=  18.7ms
+  [policy_v2]  91 CONGESTED  quality=+155.846 runtime=    0.8s step_max=  30.0ms
+  [policy_v2]  88 DENSE      quality= +4.383 runtime=    6.1s step_max= 105.7ms
+  [policy_v2]  92 MULTIDAY   quality=+11.218 runtime=    3.3s step_max=  74.5ms
+  [policy_v2]  84 CAPSTONE   quality=+28.231 runtime=   15.2s step_max= 189.2ms
+  [policy_v2]  95 BASELINE   quality= +0.769 runtime=    0.2s step_max=   8.5ms
+  [policy_v2]  96 CONGESTED  quality= +5.328 runtime=    0.6s step_max=  28.3ms
+  [policy_v2]  93 DENSE      quality= +8.930 runtime=    6.4s step_max= 167.5ms
+  [policy_v2]  97 MULTIDAY   quality= +7.739 runtime=    4.9s step_max= 111.9ms
+  [policy_v2]  89 CAPSTONE   quality=+86.776 runtime=   11.7s step_max= 135.2ms
+  [policy_v2]  98 DENSE      quality=+25.350 runtime=    7.9s step_max= 127.2ms
+  [policy_v2]  94 CAPSTONE   quality=+27.479 runtime=   11.4s step_max= 207.2ms
+  [policy_v2]  99 CAPSTONE   quality=+31.778 runtime=    9.8s step_max= 140.4ms
+
+Final Score: 0.6870931
+Wrote policy_v2_val987654_benchmark_results.csv, policy_v2_val987654_benchmark_summary.md
+(wall time: 268.0s)
