@@ -12,7 +12,6 @@ _S = 21
 _NUM_FRACS = 3
 _MAX_REPAIR_ITERS = 300
 _COORD_SWEEPS = 2
-_QUAD_MAX_B = 20  # test scope: BASELINE/CONGESTED only
 
 _BENCH_STATS = {"repair_count": 0, "curtailed_mwh": 0.0, "zero_fallback_count": 0}
 
@@ -51,40 +50,10 @@ def _battery_arrays(challenge):
     smin = np.array([b.soc_min_mwh for b in challenge.batteries], dtype=float)
     smax = np.array([b.soc_max_mwh for b in challenge.batteries], dtype=float)
     node = np.array([b.node for b in challenge.batteries], dtype=np.intp)
-    soc0 = np.array([b.soc_initial_mwh for b in challenge.batteries], dtype=float)
-    return dict(cap=caps, pchg=pchg, pdis=pdis, etac=etac, etad=etad, smin=smin, smax=smax, node=node, B=len(caps), soc0=soc0)
+    return dict(cap=caps, pchg=pchg, pdis=pdis, etac=etac, etad=etad, smin=smin, smax=smax, node=node, B=len(caps))
 
 
-_QUAD_Z = np.array([-2.0, -1.0, 0.0, 1.0, 2.0])
-_QUAD_W = np.exp(-0.5 * _QUAD_Z ** 2)
-_QUAD_W = _QUAD_W / _QUAD_W.sum()
-_SIGMA_MIN, _SIGMA_MAX, _SIGMA_DEFAULT = 0.02, 0.6, 0.15
-
-
-def _sigma_from_rel_dev(rel_dev, fallback=_SIGMA_DEFAULT):
-    """Causal, episode-local robust volatility estimate (MAD-based) from the
-    only RT-vs-DA deviation data available at decision time -- state.rt_prices
-    covers all nodes, so even a single step gives enough samples."""
-    if rel_dev.size < 4:
-        return fallback
-    med = np.median(rel_dev)
-    mad = np.median(np.abs(rel_dev - med))
-    sigma = 1.4826 * mad
-    if not np.isfinite(sigma) or sigma <= 0:
-        return fallback
-    return float(np.clip(sigma, _SIGMA_MIN, _SIGMA_MAX))
-
-
-def _build_da_value_function(challenge, ba, sigma_hat=0.0, S=_S):
-    """Post-decision Bellman recursion. When sigma_hat > 0 this computes the
-    CORRECT stochastic continuation value E_z[max_a Q(a, price*(1+sigma*z))]
-    -- a weighted SUM of per-scenario MAXIMA over quadrature price points, not
-    a single max applied to a weighted-MEAN price. This is what distinguishes
-    it from the (mathematically incorrect for this purpose) plug-in-mean
-    approach: the future self is modeled as observing which price scenario
-    realizes and reacting optimally to THAT scenario, matching the true
-    timing of information in this problem (the real policy always sees
-    state.rt_prices before choosing its action)."""
+def _build_da_value_function(challenge, ba, S=_S):
     T = challenge.num_steps
     B = ba["B"]
     V_all = np.zeros((T + 1, B, S))
@@ -116,18 +85,10 @@ def _build_da_value_function(challenge, ba, sigma_hat=0.0, S=_S):
     V_next = V_all[T]
     for t in range(T - 1, -1, -1):
         Vc = V_next[b_idx, i0] * (1.0 - w) + V_next[b_idx, i1] * w
-        base_price = price_forecast[t][:, None, None]
-        if sigma_hat > 0.0:
-            V_here = np.zeros((B, S))
-            for z, wq in zip(_QUAD_Z, _QUAD_W):
-                price_k = base_price * (1.0 + sigma_hat * z)
-                reward_k = u * price_k * _DT - cost_term
-                total_k = reward_k + Vc
-                V_here += wq * np.max(total_k, axis=2)
-        else:
-            reward = u * base_price * _DT - cost_term
-            total = reward + Vc
-            V_here = np.max(total, axis=2)
+        price_t = price_forecast[t][:, None, None]
+        reward = u * price_t * _DT - cost_term
+        total = reward + Vc
+        V_here = np.max(total, axis=2)
         V_all[t] = V_here
         V_next = V_here
     return V_all
@@ -295,108 +256,6 @@ def _coordinate_improve(u, total, idx, node, ptdf_np, limits_np, exo, slack, swe
 _CONGESTED_MIN_B = 11
 _CONGESTED_MAX_B = 20
 
-_SCORE_MIN_B = 1
-_SCORE_MAX_B = 20  # BASELINE/CONGESTED only, same scope as the quadrature mechanism
-_TERMINAL_H = 16  # terminal window: shadow-baseline estimate is most accurate here
-_SAT_MARGIN = 1.05  # "safely saturated" requires 5% cushion above the +10 target
-_BOOST_GAP_FRAC_MAX = 0.15  # "close to boundary" zone: within 15% of the +10 target
-_BOOST_FACTOR = 1.10  # price-boost applied only inside the terminal/close-to-boundary gate
-_BOOST_TOL_FRAC = 0.02  # bounded EV give-up allowed (2% of the standard action's true value)
-_GREEDY_HORIZON = 12
-_EPS_SOC = 1e-9
-_CONSERVATIVE_CHARGE_TH = 0.95
-_CONSERVATIVE_DISCHARGE_TH = 1.05
-
-
-def _enforce_flow_feasibility_shadow(action, node, ptdf_np, limits_np, exo, slack, max_iters=64):
-    """Exact vectorized replica of greedy.py/conservative.py's
-    _enforce_flow_feasibility (soften the most-violated line iteratively via
-    a signed keep-fraction, then global bisection fallback) -- reuses the
-    already-validated _safe_network_repair, which implements the identical
-    algorithm (confirmed by direct source comparison)."""
-    repaired_action, _, _ = _safe_network_repair(action, node, ptdf_np, limits_np, exo, slack, max_iters)
-    return repaired_action
-
-
-def _precompute_shadow_schedules(challenge, ba, ptdf_np, limits_np, slack):
-    """Exact replica of the greedy and conservative baseline policies' ACTION
-    CHOICE (verified from source: neither reads state.rt_prices at all for
-    its decision -- only DA prices, exogenous injections, and the shadow's
-    OWN evolving action_bounds), so both full-horizon action schedules are
-    100% deterministic and computable once, at episode start, with zero
-    dependence on realized RT prices. (Conservative's rare profit-floor
-    fallback does depend on running profit; approximated here using DA price
-    as the E[RT] stand-in for the FUTURE portion only -- immaterial in
-    practice since the floor triggers only when cumulative profit would go
-    negative, which this project's price scenarios essentially never hit
-    except in adversarial edge cases.)"""
-    T = challenge.num_steps
-    B = ba["B"]
-    node = ba["node"]
-    smin, smax, etac, etad, pchg, pdis, cap = ba["smin"], ba["smax"], ba["etac"], ba["etad"], ba["pchg"], ba["pdis"], ba["cap"]
-    da_all = np.asarray(challenge.market.day_ahead_prices, dtype=float)  # (T, N)
-    exo_all = np.asarray(challenge.exogenous_injections, dtype=float)  # (T, N)
-    da_node0 = da_all[:, 0]
-    net_load = exo_all.sum(axis=1)
-
-    # -- greedy schedule --
-    soc_g = ba["soc0"].copy()
-    actions_g = np.zeros((T, B))
-    rewards_g_da = np.zeros(T)  # DA-priced (E[RT]~=DA) reward, for the forward profit-to-go estimate
-    for t in range(T):
-        lb, ub = _action_bounds_np(soc_g, smin, smax, etac, etad, pchg, pdis, _DT)
-        end = min(t + _GREEDY_HORIZON, T)
-        future_avg = da_node0[t + 1:end].mean() if end > t + 1 else da_node0[t]
-        risk_steps = net_load[t + 1:end] > 100.0
-        threshold_adjust = float(np.sum(risk_steps)) * 2.0
-        cur = da_node0[t]
-        a = np.where(cur < future_avg - 5.0 - threshold_adjust, lb,
-                     np.where(cur > future_avg + 5.0 + threshold_adjust, ub, 0.0))
-        exo_t = exo_all[t]
-        a = _enforce_flow_feasibility_shadow(a, node, ptdf_np, limits_np, exo_t, slack)
-        actions_g[t] = a
-        abs_a = np.abs(a)
-        rewards_g_da[t] = float(np.sum(a * da_all[t][node] * _DT - _KAPPA_TX * abs_a * _DT
-                                        - _KAPPA_DEG * (abs_a * _DT / cap) ** _BETA_DEG))
-        soc_g = _apply_action_np(a, soc_g, smin, smax, etac, etad, _DT)
-
-    # -- conservative schedule --
-    soc_c = ba["soc0"].copy()
-    actions_c = np.zeros((T, B))
-    rewards_c_da = np.zeros(T)
-    running_profit = 0.0
-    for t in range(T):
-        lb, ub = _action_bounds_np(soc_c, smin, smax, etac, etad, pchg, pdis, _DT)
-        da_t = da_all[t][node]
-        avg_da = float(da_all[t].mean())
-        can_charge = lb <= -pchg + _EPS_SOC
-        can_discharge = ub >= pdis - _EPS_SOC
-        a = np.where((da_t < _CONSERVATIVE_CHARGE_TH * avg_da) & can_charge, -pchg,
-                     np.where((da_t > _CONSERVATIVE_DISCHARGE_TH * avg_da) & can_discharge, pdis, 0.0))
-        a = np.clip(a, lb, ub)
-        exo_t = exo_all[t]
-        a = _enforce_flow_feasibility_shadow(a, node, ptdf_np, limits_np, exo_t, slack)
-        abs_a = np.abs(a)
-        step_profit = float(np.sum(a * da_t * _DT - _KAPPA_TX * abs_a * _DT
-                                    - _KAPPA_DEG * (abs_a * _DT / cap) ** _BETA_DEG))
-        if running_profit + step_profit < 0.0:
-            scale = 1.0
-            while running_profit + step_profit < 0.0 and scale > 1e-6:
-                scale *= 0.95
-                a = a * scale
-                abs_a = np.abs(a)
-                step_profit = float(np.sum(a * da_t * _DT - _KAPPA_TX * abs_a * _DT
-                                            - _KAPPA_DEG * (abs_a * _DT / cap) ** _BETA_DEG))
-        actions_c[t] = a
-        rewards_c_da[t] = step_profit
-        running_profit += step_profit
-        soc_c = _apply_action_np(a, soc_c, smin, smax, etac, etad, _DT)
-
-    # cumulative REMAINING (DA-estimated) profit-to-go from each step t
-    greedy_remaining_from = np.concatenate([np.cumsum(rewards_g_da[::-1])[::-1], [0.0]])
-    conservative_remaining_from = np.concatenate([np.cumsum(rewards_c_da[::-1])[::-1], [0.0]])
-    return actions_g, actions_c, greedy_remaining_from, conservative_remaining_from
-
 
 def _evaluate_total_value(action, price, cap, soc, smin, smax, etac, etad, V_next, S):
     abs_u = np.abs(action)
@@ -450,13 +309,8 @@ def _constructive_from_grid(u, total, best_idx, node, ptdf_np, limits_np, exo, s
 
 _LP_BREAKPOINTS = 21
 _CONGESTION_DISCOUNT_ALPHA = 0.04  # max Vc discount at 100% observed repair rate: 15%
-_DISCOUNT_MAX_B = 60  # congestion-discount mechanism: extended to MULTIDAY/DENSE in policy_v10
-# after validating a real, positive gain (+0.059 MULTIDAY, +0.026 DENSE) on top of the LP
-# allocator extension from policy_v9. CAPSTONE (B=100) remains excluded and untouched.
-_LP_MAX_B = 60  # exact LP joint allocator: extended to MULTIDAY/DENSE too (Section 6/policy_v9) --
-# every unsaturated MULTIDAY/DENSE instance showed repair engaging on literally every step,
-# the same symptom the LP allocator measurably fixed for CONGESTED. CAPSTONE (B=100) is
-# deliberately excluded and kept on the exact legacy (policy_v6/v2) path, unchanged.
+_LP_MAX_B = 20  # BASELINE (10) and CONGESTED (20) only -- keeps the per-step LP small;
+# MULTIDAY/DENSE/CAPSTONE (B=40..100, L=120..300) keep the existing discrete-grid path.
 
 
 def _lp_joint_solve(soc, price, cap, smin, smax, etac, etad, lb, ub, V_next, S,
@@ -559,30 +413,12 @@ def policy(challenge, state):
         if len(_CACHE) > 4:
             _CACHE.clear()
         ba = _battery_arrays(challenge)
-        sigma_hat = 0.0
-        if B <= _QUAD_MAX_B:
-            da0 = np.asarray(challenge.market.day_ahead_prices[state.time_step], dtype=float)
-            rt0 = np.asarray(state.rt_prices, dtype=float)
-            rel_dev0 = (rt0 - da0) / np.maximum(np.abs(da0), 1.0)
-            sigma_hat = _sigma_from_rel_dev(rel_dev0)
-        V_all = _build_da_value_function(challenge, ba, sigma_hat=sigma_hat)
+        V_all = _build_da_value_function(challenge, ba)
         net = challenge.network
-        ptdf_np0 = np.asarray(net.ptdf, dtype=float)
-        limits_np0 = np.asarray(net.flow_limits, dtype=float)
-        shadow = None
-        if _SCORE_MIN_B <= B <= _SCORE_MAX_B:
-            actions_g, actions_c, g_remain, c_remain = _precompute_shadow_schedules(
-                challenge, ba, ptdf_np0, limits_np0, net.slack_bus)
-            shadow = {
-                "actions_g": actions_g, "actions_c": actions_c,
-                "g_remain": g_remain, "c_remain": c_remain,
-                "g_so_far": 0.0, "c_so_far": 0.0,
-            }
         entry = {
             "ba": ba, "V_all": V_all, "sig": sig,
-            "ptdf": ptdf_np0,
-            "limits": limits_np0,
-            "shadow": shadow,
+            "ptdf": np.asarray(net.ptdf, dtype=float),
+            "limits": np.asarray(net.flow_limits, dtype=float),
         }
         _CACHE[key] = entry
         _BENCH_STATS["repair_count"] = 0
@@ -609,7 +445,7 @@ def policy(challenge, state):
     # observed repair-engagement rate so far this episode -- no discount until
     # there is enough history to trust the estimate, and capped so it can
     # never become aggressive.
-    specialized = B <= _DISCOUNT_MAX_B
+    specialized = B <= _LP_MAX_B
     if specialized:
         steps_so_far = entry.get("steps_so_far", 0)
         repairs_so_far = entry.get("repairs_so_far", 0)
@@ -719,62 +555,6 @@ def policy(challenge, state):
                 val_lp = _evaluate_total_value(lp_action, price, cap, soc, smin, smax, etac, etad, V_next, S)
                 if val_lp > val_std:
                     action = lp_action
-
-    # Score-aware terminal gate (BASELINE+CONGESTED only, last _TERMINAL_H
-    # steps only). Uses the shadow-baseline tracker (exact for elapsed steps,
-    # DA-projected for the remainder -- see _precompute_shadow_schedules) to
-    # classify the instance's saturation state and, ONLY when "close to the
-    # +10 boundary" (Class B), tries a price-boosted candidate action,
-    # accepted only if its TRUE (unboosted) local value gives up no more
-    # than a small, bounded fraction of the standard action's value -- a
-    # deliberate, SMALL risk-tolerance justified by the CONVEXITY of the
-    # clipped-quality payoff near the saturation kink (quality is flat above
-    # +10, so a bounded EV cost for a real shot at crossing is rational
-    # there in a way it is not away from the boundary). Never touches
-    # MULTIDAY/DENSE/CAPSTONE; never activates outside the terminal window.
-    shadow = entry.get("shadow")
-    T = challenge.num_steps
-    if shadow is not None:
-        g_act_t = shadow["actions_g"][t]
-        c_act_t = shadow["actions_c"][t]
-        abs_g, abs_c = np.abs(g_act_t), np.abs(c_act_t)
-        g_step_profit = float(np.sum(g_act_t * price * _DT - _KAPPA_TX * abs_g * _DT
-                                      - _KAPPA_DEG * (abs_g * _DT / cap) ** _BETA_DEG))
-        c_step_profit = float(np.sum(c_act_t * price * _DT - _KAPPA_TX * abs_c * _DT
-                                      - _KAPPA_DEG * (abs_c * _DT / cap) ** _BETA_DEG))
-
-        if t >= T - _TERMINAL_H:
-            g_remain_next = shadow["g_remain"][t + 1] if t + 1 < len(shadow["g_remain"]) else 0.0
-            c_remain_next = shadow["c_remain"][t + 1] if t + 1 < len(shadow["c_remain"]) else 0.0
-            est_final_g = shadow["g_so_far"] + g_step_profit + g_remain_next
-            est_final_c = shadow["c_so_far"] + c_step_profit + c_remain_next
-            est_final_baseline = max(est_final_g, est_final_c)
-
-            val_std = _evaluate_total_value(action, price, cap, soc, smin, smax, etac, etad, V_next, S)
-            est_final_policy_profit = state.total_profit + val_std
-
-            if est_final_baseline >= 50.0:  # Class E guard: skip near-zero-baseline instances
-                target_profit = est_final_baseline * 11.0
-                if est_final_policy_profit < target_profit * _SAT_MARGIN:
-                    est_quality = max(-10.0, min((est_final_policy_profit - est_final_baseline) / est_final_baseline, 10.0))
-                    if est_quality >= 10.0 - _BOOST_GAP_FRAC_MAX * 10.0:
-                        reward_boost = u * price[:, None] * _BOOST_FACTOR * _DT - _KAPPA_TX * abs_u * _DT \
-                            - _KAPPA_DEG * (abs_u * _DT / cap[:, None]) ** _BETA_DEG
-                        total_boost = reward_boost + Vc
-                        idx_boost = np.argmax(total_boost, axis=1)
-                        action_boost = u[np.arange(B), idx_boost]
-                        flows_b = _flows_np(exo, action_boost, node, slack, ptdf_np)
-                        if not _feasible(flows_b, limits_np):
-                            action_boost, _, _ = _safe_network_repair(action_boost, node, ptdf_np, limits_np, exo, slack)
-                            flows_b = _flows_np(exo, action_boost, node, slack, ptdf_np)
-                        if _feasible(flows_b, limits_np):
-                            action_boost = np.clip(action_boost, lb, ub)
-                            val_boost = _evaluate_total_value(action_boost, price, cap, soc, smin, smax, etac, etad, V_next, S)
-                            if val_boost >= val_std - _BOOST_TOL_FRAC * abs(val_std):
-                                action = action_boost
-
-        shadow["g_so_far"] += g_step_profit
-        shadow["c_so_far"] += c_step_profit
 
     if specialized:
         entry["steps_so_far"] = entry.get("steps_so_far", 0) + 1
